@@ -1,7 +1,11 @@
 package ru.mail.polis.ads.task1.timatifey;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.EmptyStackException;
+import java.util.NoSuchElementException;
 
 public class Problem3837 {
     public static void main(final String[] arg) throws IOException {
@@ -203,7 +207,7 @@ class Queue<E> {
         size++;
     }
 
-    public E pop() throws EmptyStackException {
+    public E pop() throws NoSuchElementException {
         if (size == 0)
             throw new EmptyStackException();
         Node<E> currentFirst = this.first;
@@ -212,7 +216,7 @@ class Queue<E> {
         return currentFirst.item;
     }
 
-    public E front() throws EmptyStackException {
+    public E front() throws NoSuchElementException {
         if (size == 0)
             throw new EmptyStackException();
         return this.first.item;
