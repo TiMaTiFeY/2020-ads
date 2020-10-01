@@ -1,13 +1,16 @@
-package ru.mail.polis.ads.task1.timatifey;
+package ru.mail.polis.ads.timatifey.homework1;
 
-import java.io.*;
-import java.util.EmptyStackException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.NoSuchElementException;
 
-public class Problem6124 {
+public class Problem6125 {
     public static void main(final String[] arg) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(System.out);
-        Stack<Integer> stack = new Stack();
+        Queue<Integer> queue = new Queue();
         String command;
         String answer;
         do {
@@ -15,21 +18,21 @@ public class Problem6124 {
             try {
                 switch (command) {
                     case "pop": {
-                        int res = stack.pop();
+                        int res = queue.pop();
                         answer = String.valueOf(res);
                         break;
                     }
-                    case "back": {
-                        int res = stack.back();
+                    case "front": {
+                        int res = queue.front();
                         answer = String.valueOf(res);
                         break;
                     }
                     case "size": {
-                        answer = Integer.toString(stack.getSize());
+                        answer = Integer.toString(queue.getSize());
                         break;
                     }
                     case "clear": {
-                        stack.clear();
+                        queue.clear();
                         answer = "ok";
                         break;
                     }
@@ -39,12 +42,12 @@ public class Problem6124 {
                     }
                     default: {
                         int num = Integer.parseInt(command.split(" ")[1]);
-                        stack.push(num);
+                        queue.push(num);
                         answer = "ok";
                         break;
                     }
                 }
-            } catch (EmptyStackException err) {
+            } catch (NoSuchElementException err) {
                 answer = "error";
             }
             out.write(answer + "\n");
@@ -53,44 +56,54 @@ public class Problem6124 {
     }
 }
 
-class Stack<E>{
+class Queue<E> {
     private int size;
     private Node<E> last;
+    private Node<E> first;
 
-    Stack() {
+    Queue() {
         this.size = 0;
         this.last = null;
+        this.first = null;
     }
 
     private static class Node<E> {
         E item;
         Node<E> next;
+        Node<E> prev;
 
-        Node(E element, Node<E> next) {
+        Node(Node<E> prev, E element, Node<E> next) {
             this.item = element;
             this.next = next;
+            this.prev = prev;
         }
     }
 
     public void push(E element){
-        Node<E> currentLast = this.last;
-        this.last = new Node(element, currentLast);
+        if (size == 0) {
+            this.first = this.last = new Node(null, element, null);
+        } else {
+            Node<E> currentLast = this.last;
+            Node<E> newLast = new Node(null, element, currentLast);
+            this.last = newLast;
+            currentLast.prev = newLast;
+        }
         size++;
     }
 
-    public E pop() throws EmptyStackException {
+    public E pop() throws NoSuchElementException {
         if (size == 0)
-            throw new EmptyStackException();
-        Node<E> currentLast = this.last;
-        this.last = this.last.next;
+            throw new NoSuchElementException();
+        Node<E> currentFirst = this.first;
+        this.first = this.first.prev;
         size--;
-        return currentLast.item;
+        return currentFirst.item;
     }
 
-    public E back() throws EmptyStackException {
+    public E front() throws NoSuchElementException {
         if (size == 0)
-            throw new EmptyStackException();
-        return this.last.item;
+            throw new NoSuchElementException();
+        return this.first.item;
     }
 
     public int getSize() {
@@ -103,8 +116,10 @@ class Stack<E>{
             next = x.next;
             x.item = null;
             x.next = null;
+            x.prev = null;
         }
         this.size = 0;
         this.last = null;
+        this.first = null;
     }
 }

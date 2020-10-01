@@ -1,11 +1,9 @@
-package ru.mail.polis.ads.task1.timatifey;
+package ru.mail.polis.ads.timatifey.homework1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.EmptyStackException;
-import java.util.NoSuchElementException;
 
 public class Problem3837 {
     public static void main(final String[] arg) throws IOException {
@@ -18,7 +16,6 @@ public class Problem3837 {
             String commands = in.readLine();
             Stack<Expression> stack = new Stack();
 
-            //Создаем дерево для этого выражения
             for (char ch : commands.toCharArray()) {
                 String el = String.valueOf(ch);
                 if (el.equals(el.toLowerCase())) {
@@ -35,8 +32,6 @@ public class Problem3837 {
             queue.push(exp);
             StringBuilder res = new StringBuilder(exp.getOp());
 
-            //Используя принцип поиска в ширину дерево обратно преобразовываем в строку
-            //Принцип таков, что собрать все символы с каждого уровня уровня дерева слева направо
             while (queue.getSize() != 0) {
                 Expression currentExp = queue.pop();
                 if (isBinary(currentExp)) {
@@ -113,129 +108,5 @@ class Expression {
         public String toString() {
             return "(" + left + " " + op + " " + right + ")";
         }
-    }
-}
-
-class Stack<E>{
-    private int size;
-    private Node<E> last;
-
-    Stack() {
-        this.size = 0;
-        this.last = null;
-    }
-
-    private static class Node<E> {
-        E item;
-        Node<E> next;
-
-        Node(E element, Node<E> next) {
-            this.item = element;
-            this.next = next;
-        }
-    }
-
-    public void push(E element){
-        Node<E> currentLast = this.last;
-        this.last = new Node(element, currentLast);;
-        size++;
-    }
-
-    public E pop() throws EmptyStackException {
-        if (size == 0)
-            throw new EmptyStackException();
-        Node<E> currentLast = this.last;
-        this.last = this.last.next;
-        size--;
-        return currentLast.item;
-    }
-
-    public E back() throws EmptyStackException {
-        if (size == 0)
-            throw new EmptyStackException();
-        return this.last.item;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void clear() {
-        Node next;
-        for(Node x = this.last; x != null; x = next) {
-            next = x.next;
-            x.item = null;
-            x.next = null;
-        }
-        this.size = 0;
-        this.last = null;
-    }
-}
-
-class Queue<E> {
-    private int size;
-    private Node<E> last;
-    private Node<E> first;
-
-    Queue() {
-        this.size = 0;
-        this.last = null;
-        this.first = null;
-    }
-
-    private static class Node<E> {
-        E item;
-        Node<E> next;
-        Node<E> prev;
-
-        Node(Node<E> prev, E element, Node<E> next) {
-            this.item = element;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
-
-    public void push(E element){
-        if (size == 0) {
-            this.first = this.last = new Node(null, element, null);
-        } else {
-            Node<E> currentLast = this.last;
-            Node<E> newLast = new Node(null, element, currentLast);
-            this.last = newLast;
-            currentLast.prev = newLast;
-        }
-        size++;
-    }
-
-    public E pop() throws NoSuchElementException {
-        if (size == 0)
-            throw new EmptyStackException();
-        Node<E> currentFirst = this.first;
-        this.first = this.first.prev;
-        size--;
-        return currentFirst.item;
-    }
-
-    public E front() throws NoSuchElementException {
-        if (size == 0)
-            throw new EmptyStackException();
-        return this.first.item;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void clear() {
-        Node next;
-        for(Node x = this.last; x != null; x = next) {
-            next = x.next;
-            x.item = null;
-            x.next = null;
-            x.prev = null;
-        }
-        this.size = 0;
-        this.last = null;
-        this.first = null;
     }
 }
