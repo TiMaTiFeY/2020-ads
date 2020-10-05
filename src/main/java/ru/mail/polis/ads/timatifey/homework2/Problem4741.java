@@ -11,9 +11,9 @@ public class Problem4741 {
         PrintWriter out = new PrintWriter(System.out);
 
         int n = Integer.parseInt(in.readLine());
-        String[] nums = in.readLine().split("\\s+");
+        String[] numbs = in.readLine().split("\\s+");
         int[] arr = new int[n];
-        for (int i = 0; i < n; i++) arr[i] = Integer.parseInt(nums[i]);
+        for (int i = 0; i < n; i++) arr[i] = Integer.parseInt(numbs[i]);
 
         int res = 0;
 

@@ -44,11 +44,10 @@ public class Problem3738 {
         PrintWriter out = new PrintWriter(System.out);
 
         int n = Integer.parseInt(in.readLine());
-        String[] nums = in.readLine().split("\\s+");
+        String[] numbs = in.readLine().split("\\s+");
 
         int[] arr = new int[n];
-        for (int i = 0; i < n; i++) arr[i] = Integer.parseInt(nums[i]);
-        //Arrays.sort(arr);
+        for (int i = 0; i < n; i++) arr[i] = Integer.parseInt(numbs[i]);
         arr = mergeSort(arr);
         for (int a: arr) {
             out.write(a + " ");
