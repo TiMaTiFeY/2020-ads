@@ -1,10 +1,13 @@
 package ru.mail.polis.ads.timatifey.homework3;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
 /*
 Task text: https://www.e-olymp.com/ru/problems/4039
 Task tests: https://www.e-olymp.com/ru/submissions/7484169
