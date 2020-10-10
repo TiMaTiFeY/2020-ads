@@ -50,7 +50,8 @@ public class Problem4037 {
             arr[i][0] = Integer.parseInt(s[0]);
             arr[i][1] = Integer.parseInt(s[1]);
         }
-        for (int[] a: mergeSort(arr)) out.write(a[0] + " " + a[1] + "\n");
+        arr = mergeSort(arr);
+        for (int[] a: arr) out.write(a[0] + " " + a[1] + "\n");
         out.close();
     }
 
