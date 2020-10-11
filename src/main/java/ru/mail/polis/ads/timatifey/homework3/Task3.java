@@ -1,23 +1,53 @@
 package ru.mail.polis.ads.timatifey.homework3;
 
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.io.BufferedOutputStream;
 
 /*
 Task text: https://www.e-olymp.com/ru/problems/4074
-Task tests: https://www.e-olymp.com/ru/submissions/7486884
+Task tests: https://www.e-olymp.com/ru/submissions/7490095
  */
 
 public class Task3 {
-    public static void main(final String[] arg) {
-        Scanner sc = new Scanner(System.in);
-        try (PrintWriter out = new PrintWriter(System.out)) {
-            HeapMedian heap = new HeapMedian(1_000_000);
-            while (sc.hasNextInt()) {
-                int x = sc.nextInt();
-                heap.add(x);
-                out.write(heap.getMedian() + "\n");
+    private static class FastScanner {
+        private final BufferedReader reader;
+        private StringTokenizer tokenizer;
+
+        FastScanner(final InputStream in) {
+            reader = new BufferedReader(new InputStreamReader(in));
+        }
+
+        String next() {
+            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+                try {
+                    tokenizer = new StringTokenizer(reader.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            return tokenizer.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+    }
+
+    public static void main(final String[] arg) {
+        final FastScanner in = new FastScanner(System.in);
+        try(BufferedOutputStream out = new BufferedOutputStream(System.out)) {
+            HeapMedian heap = new HeapMedian(1_000_000);
+            while (true) {
+                int x = in.nextInt();
+                heap.add(x);
+                byte[] buffer = (heap.getMedian() + "\n").getBytes();
+                out.write(buffer, 0, buffer.length);
+            }
+        } catch (Exception ignored) {
         }
     }
 }
