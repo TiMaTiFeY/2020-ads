@@ -1,20 +1,18 @@
 package ru.mail.polis.ads.timatifey.homework3;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /*
 Task text: https://www.e-olymp.com/ru/problems/4074
-Task tests: https://www.e-olymp.com/ru/submissions/7485232
+Task tests: https://www.e-olymp.com/ru/submissions/7486884
  */
 
 public class Task3 {
     public static void main(final String[] arg) {
         Scanner sc = new Scanner(System.in);
         try (PrintWriter out = new PrintWriter(System.out)) {
-            HeapMedian heap = new HeapMedian();
+            HeapMedian heap = new HeapMedian(1_000_000);
             while (sc.hasNextInt()) {
                 int x = sc.nextInt();
                 heap.add(x);
@@ -25,13 +23,13 @@ public class Task3 {
 }
 
 class HeapMedian {
-    private HeapMax leftHeap;
-    private HeapMin rightHeap;
+    private final HeapMax leftHeap;
+    private final HeapMin rightHeap;
     private int size = 0;
 
-    HeapMedian() {
-        leftHeap = new HeapMax();
-        rightHeap = new HeapMin();
+    HeapMedian(int size) {
+        leftHeap = new HeapMax(size / 2);
+        rightHeap = new HeapMin(size / 2);
     }
 
     public void add(int x) {
@@ -68,16 +66,15 @@ class HeapMedian {
 }
 
 class HeapMax {
-    private final List<Integer> heap;
+    private final int[] heap;
     private int size = 0;
 
-    HeapMax() {
-        heap = new ArrayList();
-        heap.add(0);
+    HeapMax(int size) {
+        heap = new int[size + 2];
     }
 
     public void swim(int k) {
-        while (k > 1 && heap.get(k) > heap.get(k / 2)) {
+        while (k > 1 && heap[k] > heap[k / 2]) {
             swap(k, k / 2);
             k = k / 2;
         }
@@ -86,37 +83,33 @@ class HeapMax {
     public void sink(int k) {
         while (2 * k <= size) {
             int j = 2 * k; //left child
-            if (j < size && heap.get(j) < heap.get(j + 1)) j++; //right child
-            if (heap.get(k) >= heap.get(j)) break; //inv holds
+            if (j < size && heap[j] < heap[j + 1]) j++; //right child
+            if (heap[k] >= heap[j]) break; //inv holds
             swap(k, j);
             k = j;
         }
     }
 
     private void swap(int i, int j) {
-        int t = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, t);
+        int t = heap[i];
+        heap[i] = heap[j];
+        heap[j] = t;
     }
 
     public void insert(int v) {
-        size++;
-        if (size <= heap.size() - 1)
-            heap.set(size, v);
-        else
-            heap.add(v);
+        heap[++size] = v;
         swim(size);
     }
 
     public int delMax() {
-        int max = heap.get(1);
+        int max = heap[1];
         swap(1, size--);
         sink(1);
         return max;
     }
 
     public int checkMax() {
-        return heap.get(1);
+        return heap[1];
     }
 
     public int size() {
@@ -125,16 +118,15 @@ class HeapMax {
 }
 
 class HeapMin {
-    private final List<Integer> heap;
+    private final int[] heap;
     private int size = 0;
 
-    HeapMin() {
-        heap = new ArrayList();
-        heap.add(0);
+    HeapMin(int size) {
+        heap = new int[size + 2];
     }
 
     public void swim(int k) {
-        while (k > 1 && heap.get(k) < heap.get(k / 2)) {
+        while (k > 1 && heap[k] < heap[k / 2]) {
             swap(k, k / 2);
             k = k / 2;
         }
@@ -143,37 +135,33 @@ class HeapMin {
     public void sink(int k) {
         while (2 * k <= size) {
             int j = 2 * k; //left child
-            if (j < size && heap.get(j) > heap.get(j + 1)) j++; //right child
-            if (heap.get(k) <= heap.get(j)) break; //inv holds
+            if (j < size && heap[j] > heap[j + 1]) j++; //right child
+            if (heap[k] <= heap[j]) break; //inv holds
             swap(k, j);
             k = j;
         }
     }
 
     private void swap(int i, int j) {
-        int t = heap.get(i);
-        heap.set(i, heap.get(j));
-        heap.set(j, t);
+        int t = heap[i];
+        heap[i] = heap[j];
+        heap[j] = t;
     }
 
     public void insert(int v) {
-        size++;
-        if (size <= heap.size() - 1)
-            heap.set(size, v);
-        else
-            heap.add(v);
+        heap[++size] = v;
         swim(size);
     }
 
     public int delMin() {
-        int min = heap.get(1);
+        int min = heap[1];
         swap(1, size--);
         sink(1);
         return min;
     }
 
     public int checkMin() {
-        return heap.get(1);
+        return heap[1];
     }
 
     public int size() {
