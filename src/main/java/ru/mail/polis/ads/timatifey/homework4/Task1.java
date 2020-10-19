@@ -3,54 +3,14 @@ package ru.mail.polis.ads.timatifey.homework4;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 /*
 Task text: https://www.e-olymp.com/ru/problems/1087
-Task tests:
+Task tests: https://www.e-olymp.com/ru/submissions/7542560
  */
 
 public class Task1 {
-    private static class FastScanner {
-        private final BufferedReader reader;
-        private StringTokenizer tokenizer;
-
-        FastScanner(final InputStream in) {
-            reader = new BufferedReader(new InputStreamReader(in));
-        }
-
-        String next() {
-            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
-                try {
-                    tokenizer = new StringTokenizer(reader.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return tokenizer.nextToken();
-        }
-
-        int nextInt() {
-            return Integer.parseInt(next());
-        }
-    }
-
-    public static void printArray(int[][] a, String s) {
-        System.out.print("\t");
-        for (int i = 0; i < s.length(); i++) {
-            System.out.print(s.charAt(i) + "\t");
-        }
-        System.out.println();
-        for (int i = 0; i < s.length(); i++) {
-            System.out.print(s.charAt(i) + "\t");
-            for (int j = 0; j < s.length(); j++) {
-                System.out.print(a[i][j]+"\t");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
     public static boolean areCorrectChars(char a, char b) {
         return (a == '(' && b == ')') || (a == '[' && b == ']');
     }
@@ -82,9 +42,13 @@ public class Task1 {
     }
 
     public static void main(final String[] arg) {
-        final FastScanner in = new FastScanner(System.in);
+        final Scanner in = new Scanner(System.in);
         try (PrintWriter out = new PrintWriter(System.out)) {
-            String s = in.next();
+            String s = in.nextLine();
+            if (s == null || s.equals("")) {
+                out.write("");
+                return;
+            }
             int n = s.length();
             int[][] d = new int[n][n];
             int[][] path = new int[n][n];
