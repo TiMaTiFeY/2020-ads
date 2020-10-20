@@ -9,7 +9,7 @@ Task text: https://www.e-olymp.com/ru/problems/2169
 Task tests: https://www.e-olymp.com/ru/submissions/7548370
  */
 
-public class Main {
+public class Task1 {
     public static void main(String[] args) {
         final Scanner in = new Scanner(System.in);
         try (PrintWriter out = new PrintWriter(System.out)) {
