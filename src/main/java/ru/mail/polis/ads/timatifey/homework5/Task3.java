@@ -1,14 +1,14 @@
-package ru.mail.polis.ads.timatifey.lesson20oct;
+package ru.mail.polis.ads.timatifey.homework5;
 
 import java.io.*;
 import java.util.StringTokenizer;
 
 /*
-Task text: https://www.e-olymp.com/ru/problems/3968
-Task tests: https://www.e-olymp.com/ru/submissions/7557275
+Task text: https://www.e-olymp.com/ru/problems/3969
+Task tests: https://www.e-olymp.com/ru/submissions/7548935
  */
 
-public class Task4 {
+public class Task3 {
     private static class FastScanner {
         private final BufferedReader reader;
         private StringTokenizer tokenizer;
@@ -32,26 +32,25 @@ public class Task4 {
             return Integer.parseInt(next());
         }
     }
-    final static double eps = 0.0000001;
 
     public static void main(String[] args) {
         final FastScanner in = new FastScanner(System.in);
-        double c = Double.parseDouble(in.next());
-        double l = 0;
-        double r = c;
-        while (Math.abs(r - l) >= eps) {
-            double m = (l + r) / 2;
-            if (check(m, c)) {
+        long w = in.nextInt();
+        long h = in.nextInt();
+        long n = in.nextInt();
+
+        long l = Math.max(w, h);
+        long r = Math.max(w, h) * n;
+        while (l < r) {
+            long m = (l + r) / 2;
+            long count = (m / w) * (m / h);
+            if (n <= count) {
                 r = m;
             } else {
-                l = m;
+                l = m + 1;
             }
         }
-        System.out.printf("%f", l);
+        System.out.println(l);
     }
 
-    public static boolean check(double x, double c) {
-        double res = x * x + Math.sqrt(x);
-        return c - res < eps;
-    }
 }

@@ -1,4 +1,4 @@
-package ru.mail.polis.ads.timatifey.lesson20oct;
+package ru.mail.polis.ads.timatifey.homework5;
 
 import java.io.*;
 import java.util.StringTokenizer;
