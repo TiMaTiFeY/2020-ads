@@ -122,6 +122,7 @@ class BstBaseTest {
         assertFalse(bst.isEmpty());
         int size = bst.size();
 
+        assertEquals(bst.size(), 6);
         assertEquals(bst.remove("testStringKey4"), "testStringValue4");
         assertEquals(bst.size(), --size);
         assertFalse(bst.containsKey("testStringKey4"));
