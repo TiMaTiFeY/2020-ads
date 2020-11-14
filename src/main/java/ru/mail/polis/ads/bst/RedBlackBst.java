@@ -20,6 +20,7 @@ public class RedBlackBst<Key extends Comparable<Key>, Value>
         boolean color;
     }
 
+
     @Nullable
     @Override
     public Value get(@NotNull Key key) {
