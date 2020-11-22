@@ -3,10 +3,9 @@ package ru.mail.polis.ads.hash;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class Table<Key extends Comparable<Key>, Value>
-        implements HashTable<Key, Value> {
+public class Table<Key, Value> implements HashTable<Key, Value> {
 
-    private static class Cell<Key extends Comparable<Key>, Value> {
+    private static class Cell<Key, Value> {
         private final Key key;
         private Value value;
         private Cell<Key, Value> next;
@@ -31,8 +30,8 @@ public class Table<Key extends Comparable<Key>, Value>
 
     private void resize() {
         capacity *= 2;
-        Cell[] oldTable = table;
-        table = new Cell[capacity];
+        Cell<Key, Value>[] oldTable = table;
+        table = new Cell[capacity];;
         size = 0;
         for (Cell<Key, Value> cell : oldTable) {
             Cell<Key, Value> current = cell;
