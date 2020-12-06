@@ -1,15 +1,18 @@
-package ru.mail.polis.ads.timatifey.homework4;
+package ru.mail.polis.ads.timatifey.homework9;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /*
-Task text: https://www.e-olymp.com/ru/problems/262
-Task tests: https://www.e-olymp.com/ru/submissions/7506644
+Топологическая сортировка
+Task text: https://www.e-olymp.com/ru/problems/1948
+Task tests:
  */
 
 public class Task4 {
@@ -41,23 +44,22 @@ public class Task4 {
         final FastScanner in = new FastScanner(System.in);
         try (PrintWriter out = new PrintWriter(System.out)) {
             int n = in.nextInt();
-            int[] stepCost = new int[n + 2];
-            int[] d = new int[n + 2];
-            stepCost[0] = 0;
-            for (int i = 1; i < n + 1; i++)
-                stepCost[i] = in.nextInt();
-            stepCost[n + 1] = 0;
-            int k = in.nextInt();
+            int m = in.nextInt();
 
-            d[0] = 0;
-            for (int i = 1; i < n + 2; i++) {
-                int currentMax = d[i - 1];
-                for (int j = Math.max(i - k, 0); j < (i - 1); j++)
-                    if (currentMax < d[j]) currentMax = d[j];
-                d[i] = currentMax + stepCost[i];
+            final int INF = Integer.MAX_VALUE;
+
+            List<List<Integer>> graph = new ArrayList<>(n);
+            for (int i = 0; i < n; i++) {
+                graph.add(new ArrayList<>());
             }
 
-            out.write(String.valueOf(d[n + 1]));
+            for (int i = 0; i < m; i++) {
+                int b = in.nextInt();
+                int e = in.nextInt();
+                graph.get(b - 1).add(e - 1);
+            }
+
+
         }
     }
 }
