@@ -2,14 +2,13 @@ package ru.mail.polis.ads.timatifey.homework9;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
 /*
 Циклы в графе
 Task text: https://www.e-olymp.com/ru/problems/2022
-Task tests:
+Task tests: https://www.e-olymp.com/ru/submissions/7985837
  */
 
 public class Task5 {
@@ -50,6 +49,7 @@ public class Task5 {
                 int b = in.nextInt();
                 int e = in.nextInt();
                 graph.get(b - 1).add(e - 1);
+                graph.get(e - 1).add(b - 1);
             }
             DoDFS doDFS = new DoDFS(graph, n);
             if (doDFS.isHasLoop()) {
@@ -81,24 +81,26 @@ public class Task5 {
             minV = n + 1;
             for (int i = 0; i < n; i++) {
                 if (color[i] == WHITE) {
-                    dfs(i, parent);
+                    dfs(i);
                 }
             }
         }
 
-        public void dfs(int u, int[] parent) {
+        public void dfs(int u) {
             color[u] = GRAY;
             for (int v: graph.get(u)) {
-                if (color[v] == WHITE) {
-                    parent[v] = u;
-                    dfs(v, parent);
-                } else {
-                    if (color[v] == GRAY) {
-                        hasLoop = true;
-                        int t = parent[v];
+                if (parent[u] != v) {
+                    if (color[v] == WHITE) {
                         parent[v] = u;
-                        findMinV(v, parent);
-                        parent[v] = t;
+                        dfs(v);
+                    } else {
+                        if (color[v] == GRAY) {
+                            int t = parent[v];
+                            parent[v] = u;
+                            hasLoop = true;
+                            findMinV(v);
+                            parent[v] = t;
+                        }
                     }
                 }
             }
@@ -113,9 +115,9 @@ public class Task5 {
             return minV + 1;
         }
 
-        public void findMinV(int v, int[] parent) {
+        public void findMinV(int v) {
             int curr = v;
-            while (parent[curr] != v) {
+            while (parent[curr] != v && parent[curr] != -1) {
                 if (minV > curr) {
                     minV = curr;
                 }
@@ -127,6 +129,3 @@ public class Task5 {
         }
     }
 }
-
-
-

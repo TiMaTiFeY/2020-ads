@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 /*
 Топологическая сортировка
 Task text: https://www.e-olymp.com/ru/problems/1948
-Task tests:
+Task tests: https://www.e-olymp.com/ru/submissions/7980606
  */
 
 public class Task4 {
@@ -46,8 +46,6 @@ public class Task4 {
             int n = in.nextInt();
             int m = in.nextInt();
 
-            final int INF = Integer.MAX_VALUE;
-
             List<List<Integer>> graph = new ArrayList<>(n);
             for (int i = 0; i < n; i++) {
                 graph.add(new ArrayList<>());
@@ -59,7 +57,62 @@ public class Task4 {
                 graph.get(b - 1).add(e - 1);
             }
 
+            DoDFS doDFS = new DoDFS(graph, n);
+            if (doDFS.hasLoop()) {
+                out.write("-1");
+            } else {
+                for (int i = doDFS.topSort().size() - 1; i >= 0; i--) {
+                    out.write(doDFS.topSort().get(i) + " ");
+                }
+            }
 
         }
+    }
+
+    static class DoDFS {
+        private final int[] color;
+        private final List<List<Integer>> graph;
+        private boolean hasLoop;
+        private final List<Integer> sortedGraph = new ArrayList<>();
+
+        static final int WHITE = 0;
+        static final int GRAY = 1;
+        static final int BLACK = 2;
+
+        DoDFS(List<List<Integer>> graph, int n) {
+            this.graph = graph;
+            this.color = new int[n];
+            hasLoop = false;
+            for (int i = 0; i < n; i++) {
+                if (color[i] == WHITE) {
+                    dfs(i);
+                }
+            }
+        }
+
+        public void dfs(int u) {
+            color[u] = GRAY;
+            for (int v: graph.get(u)) {
+                if (color[v] == WHITE) {
+                    dfs(v);
+                } else {
+                    if (color[v] == GRAY) {
+                        hasLoop = true;
+                        break;
+                    }
+                }
+            }
+            sortedGraph.add(u + 1);
+            color[u] = BLACK;
+        }
+
+        public boolean hasLoop() {
+            return hasLoop;
+        }
+
+        public List<Integer> topSort() {
+            return sortedGraph;
+        }
+
     }
 }
